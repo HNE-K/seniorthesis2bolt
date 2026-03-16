@@ -151,11 +151,11 @@ class EunicornWorld {
     }
 
     setupEventListeners() {
-        this.BG_section.addEventListener('click', (e) => this.handleMapClick(e));
+        this.viewport.addEventListener('click', (e) => this.handleMapClick(e));
 
-        this.BG_section.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: false });
-        this.BG_section.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: false });
-        this.BG_section.addEventListener('touchend', (e) => this.handleTouchEnd(e));
+        this.viewport.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: false });
+        this.viewport.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: false });
+        this.viewport.addEventListener('touchend', (e) => this.handleTouchEnd(e));
 
         this.slider.addEventListener('input', (e) => {
             this.slider.style.setProperty('--thumb-rotate', `${(e.target.value/100) * 2160}deg`);
@@ -250,8 +250,9 @@ class EunicornWorld {
     }
 
     setTarget(x, y) {
+        const imgHeight = this.BG_img.offsetHeight;
         const maxX = this.BG_section.clientWidth - this.unicorn.clientWidth;
-        const maxY = this.BG_section.clientHeight - this.unicorn.clientHeight;
+        const maxY = imgHeight - this.unicorn.clientHeight;
 
         this.targetX = Math.max(0, Math.min(maxX, x - this.unicorn.clientWidth / 2));
         this.targetY = Math.max(0, Math.min(maxY, y - this.unicorn.clientHeight / 2));
@@ -339,42 +340,49 @@ class EunicornWorld {
     startAnimationLoop() {
         const frames = this.unicorn.children;
         let frameIndex = 0;
+        let lastFrameTime = 0;
+        const frameDelay = 1000 / 12;
 
-        const animate = () => {
+        const animate = (currentTime) => {
+            this.moveToTarget();
+
             if (!this.prefersReducedMotion) {
-                this.moveToTarget();
+                if (currentTime - lastFrameTime >= frameDelay) {
+                    for (let i = 0; i < frames.length; i++) {
+                        frames[i].style.display = 'none';
+                    }
 
+                    if (this.isInWater()) {
+                        const swimStart = 12;
+                        const swimFrames = 4;
+                        const currentFrame = swimStart + (frameIndex % swimFrames);
+                        frames[currentFrame].style.display = 'inline-block';
+                    } else if (this.isMoving) {
+                        const runStart = 0;
+                        const runFrames = 8;
+                        const currentFrame = runStart + (frameIndex % runFrames);
+                        frames[currentFrame].style.display = 'inline-block';
+                    } else {
+                        const standStart = 8;
+                        const standFrames = 4;
+                        const currentFrame = standStart + (frameIndex % standFrames);
+                        frames[currentFrame].style.display = 'inline-block';
+                    }
+
+                    frameIndex++;
+                    lastFrameTime = currentTime;
+                }
+            } else {
                 for (let i = 0; i < frames.length; i++) {
                     frames[i].style.display = 'none';
                 }
-
-                if (this.isInWater()) {
-                    const swimStart = 12;
-                    const swimFrames = 4;
-                    const currentFrame = swimStart + (frameIndex % swimFrames);
-                    frames[currentFrame].style.display = 'inline-block';
-                } else if (this.isMoving) {
-                    const runStart = 0;
-                    const runFrames = 8;
-                    const currentFrame = runStart + (frameIndex % runFrames);
-                    frames[currentFrame].style.display = 'inline-block';
-                } else {
-                    const standStart = 8;
-                    const standFrames = 4;
-                    const currentFrame = standStart + (frameIndex % standFrames);
-                    frames[currentFrame].style.display = 'inline-block';
-                }
-
-                frameIndex++;
-            } else {
-                this.moveToTarget();
                 frames[8].style.display = 'inline-block';
             }
 
             requestAnimationFrame(animate);
         };
 
-        animate();
+        animate(0);
     }
 
     updateSeason() {
