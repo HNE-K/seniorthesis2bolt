@@ -328,15 +328,16 @@ class EunicornWorld {
     isInWater() {
         const BG_width = this.BG_section.offsetWidth;
         const BG_height = this.BG_section.offsetHeight;
-        const x_ratio = this.left_coord / BG_width;
-        const y_ratio = this.top_coord / BG_height;
+        const cx = (this.left_coord + this.unicorn.offsetWidth / 2) / BG_width;
+        const cy = (this.top_coord + this.unicorn.offsetHeight / 2) / BG_height;
 
         return (
-            (x_ratio >= 0 && x_ratio < 0.15 && y_ratio >= 0 && y_ratio < 0.35) ||
-            (x_ratio >= 0 && x_ratio < 0.08 && y_ratio >= 0.25 && y_ratio < 1.0) ||
-            (x_ratio >= 0.08 && x_ratio < 0.10 && y_ratio >= 0.40 && y_ratio < 0.85) ||
-            (x_ratio >= 0.12 && x_ratio < 0.38 && y_ratio >= 0.18 && y_ratio < 0.52) ||
-            (x_ratio >= 0.65 && x_ratio < 0.80 && y_ratio >= 0.58 && y_ratio < 0.82)
+            (cx >= 0.0 && cx < 0.23 && cy >= 0.0 && cy < 0.09) ||
+            (cx >= 0.03 && cx < 0.13 && cy >= 0.07 && cy < 0.50) ||
+            (cx >= 0.13 && cx < 0.43 && cy >= 0.20 && cy < 0.57) ||
+            (cx >= 0.13 && cx < 0.22 && cy >= 0.50 && cy < 0.72) ||
+            (cx >= 0.35 && cx < 0.52 && cy >= 0.40 && cy < 0.68) ||
+            (cx >= 0.65 && cx < 0.78 && cy >= 0.57 && cy < 0.80)
         );
     }
 
