@@ -306,14 +306,14 @@ class EunicornWorld {
         const viewportWidth = this.viewport.clientWidth;
         const viewportHeight = this.viewport.clientHeight;
 
-        const unicornCenterX = this.left_coord + this.unicorn.clientWidth / 2;
-        const unicornCenterY = this.top_coord + this.unicorn.clientHeight / 2;
+        const unicornCenterX = this.left_coord + this.unicorn.offsetWidth / 2;
+        const unicornCenterY = this.top_coord + this.unicorn.offsetHeight / 2;
 
         this.viewportX = unicornCenterX - viewportWidth / 2 / this.viewportScale;
         this.viewportY = unicornCenterY - viewportHeight / 2 / this.viewportScale;
 
-        const maxViewportX = this.BG_section.clientWidth - viewportWidth / this.viewportScale;
-        const maxViewportY = this.BG_section.clientHeight - viewportHeight / this.viewportScale;
+        const maxViewportX = this.BG_section.offsetWidth - viewportWidth / this.viewportScale;
+        const maxViewportY = this.BG_section.offsetHeight - viewportHeight / this.viewportScale;
 
         this.viewportX = Math.max(0, Math.min(maxViewportX, this.viewportX));
         this.viewportY = Math.max(0, Math.min(maxViewportY, this.viewportY));
@@ -332,15 +332,10 @@ class EunicornWorld {
         const y_ratio = this.top_coord / BG_height;
 
         return (
-            (x_ratio < 0.09 && y_ratio < 0.15 && y_ratio > 0.03) ||
-            (x_ratio > 0.09 && x_ratio < 0.22 && y_ratio < 0.2 && y_ratio > 0.03) ||
-            (x_ratio > 0.22 && x_ratio < 0.25 && y_ratio < 0.1 && y_ratio > 0.03) ||
-            (x_ratio > 0.38 && x_ratio < 0.47 && y_ratio < 0.25 && y_ratio > 0.15) ||
-            (x_ratio > 0.41 && x_ratio < 0.49 && y_ratio < 0.33 && y_ratio >= 0.25) ||
-            (x_ratio > 0.44 && x_ratio < 0.49 && y_ratio < 0.45 && y_ratio >= 0.33) ||
-            (x_ratio > 0.41 && x_ratio < 0.45 && y_ratio < 0.55 && y_ratio >= 0.45) ||
-            (x_ratio > 0.3 && x_ratio <= 0.41 && y_ratio < 0.55 && y_ratio >= 0.48) ||
-            (x_ratio > 0.69 && x_ratio < 0.8 && y_ratio < 0.78 && y_ratio > 0.55)
+            (x_ratio >= 0 && x_ratio < 0.25 && y_ratio >= 0 && y_ratio < 0.20) ||
+            (x_ratio >= 0.15 && x_ratio < 0.35 && y_ratio >= 0.15 && y_ratio < 0.65) ||
+            (x_ratio >= 0.35 && x_ratio < 0.52 && y_ratio >= 0.20 && y_ratio < 0.55) ||
+            (x_ratio >= 0.70 && x_ratio < 0.85 && y_ratio >= 0.55 && y_ratio < 0.80)
         );
     }
 
