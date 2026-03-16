@@ -331,14 +331,17 @@ class EunicornWorld {
         const cx = (this.left_coord + this.unicorn.offsetWidth / 2) / BG_width;
         const cy = (this.top_coord + this.unicorn.offsetHeight / 2) / BG_height;
 
-        return (
-            (cx >= 0.0 && cx < 0.23 && cy >= 0.0 && cy < 0.09) ||
-            (cx >= 0.03 && cx < 0.13 && cy >= 0.07 && cy < 0.50) ||
-            (cx >= 0.13 && cx < 0.43 && cy >= 0.20 && cy < 0.57) ||
-            (cx >= 0.13 && cx < 0.22 && cy >= 0.50 && cy < 0.72) ||
-            (cx >= 0.35 && cx < 0.52 && cy >= 0.40 && cy < 0.68) ||
-            (cx >= 0.65 && cx < 0.78 && cy >= 0.57 && cy < 0.80)
-        );
+        const onMountainLandUpper = (cx >= 0.14 && cx < 0.24 && cy >= 0.04 && cy < 0.20);
+        const onMountainLandLower = (cx >= 0.10 && cx < 0.26 && cy >= 0.20 && cy < 0.40);
+        const onMountainLand = onMountainLandUpper || onMountainLandLower;
+
+        const inOceanTop = (cx >= 0.0 && cx < 0.26 && cy >= 0.0 && cy < 0.07);
+        const inLeftBayInlet = (cx >= 0.0 && cx < 0.13 && cy >= 0.06 && cy < 0.44);
+        const inCentralLake = (cx >= 0.10 && cx < 0.43 && cy >= 0.32 && cy < 0.60);
+        const inRightRiver = (cx >= 0.37 && cx < 0.50 && cy >= 0.38 && cy < 0.62);
+        const inPurplePond = (cx >= 0.68 && cx < 0.77 && cy >= 0.59 && cy < 0.77);
+
+        return !onMountainLand && (inOceanTop || inLeftBayInlet || inCentralLake || inRightRiver || inPurplePond);
     }
 
     startAnimationLoop() {
