@@ -326,8 +326,8 @@ class EunicornWorld {
     }
 
     isInWater() {
-        const BG_width = this.BG_section.clientWidth;
-        const BG_height = this.BG_section.clientHeight;
+        const BG_width = this.BG_section.offsetWidth;
+        const BG_height = this.BG_section.offsetHeight;
         const x_ratio = this.left_coord / BG_width;
         const y_ratio = this.top_coord / BG_height;
 
