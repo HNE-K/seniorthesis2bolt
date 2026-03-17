@@ -59,6 +59,7 @@ class EunicornWorld {
         this.viewport = document.getElementById('viewport');
         this.slider = document.getElementById('slider');
         this.snow_canvas = document.getElementById('snow_canvas');
+        this.heat_turbulence = document.getElementById('heat-turbulence');
         this.frames = Array.from(this.unicorn.children);
 
         this.initDotSVGs();
@@ -90,6 +91,7 @@ class EunicornWorld {
         this.cacheLayoutDimensions();
         this.startAnimationLoop();
         this.initSnowAnimation();
+        this.initHeatHazeAnimation();
         this.updateCameraPosition();
 
         const instructions = document.getElementById('instructions');
@@ -483,6 +485,11 @@ class EunicornWorld {
 
         labels.forEach((text, i) => { this.artLinks[i].innerHTML = text; });
         this.snow_canvas.style.display = snowVisible ? 'inline-block' : 'none';
+        if (newSeason === 'summer') {
+            this.BG_section.classList.add('heat-haze');
+        } else {
+            this.BG_section.classList.remove('heat-haze');
+        }
 
         if (newSeason !== this.currentSeason) {
             this.currentSeason = newSeason;
@@ -521,6 +528,23 @@ class EunicornWorld {
             const dist = Math.sqrt(dx * dx + dy * dy);
             this.artPreviews[i].style.visibility = dist < threshold ? 'visible' : 'hidden';
         }
+    }
+
+    initHeatHazeAnimation() {
+        if (this.prefersReducedMotion || !this.heat_turbulence) return;
+
+        let tick = 0;
+
+        const animateHaze = () => {
+            this.heatHazeRAF = requestAnimationFrame(animateHaze);
+            if (!this.BG_section.classList.contains('heat-haze')) return;
+            tick++;
+            const bf = 0.012 + Math.sin(tick * 0.003) * 0.003;
+            const bf2 = 0.008 + Math.cos(tick * 0.002) * 0.002;
+            this.heat_turbulence.setAttribute('baseFrequency', `${bf.toFixed(5)} ${bf2.toFixed(5)}`);
+        };
+
+        this.heatHazeRAF = requestAnimationFrame(animateHaze);
     }
 
     initSnowAnimation() {

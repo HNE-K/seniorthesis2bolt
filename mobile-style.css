@@ -444,6 +444,14 @@ h1 {
     }
 }
 
+#BG.heat-haze {
+    filter: url(#heat-haze-filter);
+}
+
+#BG {
+    transition: filter 0.8s ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.01ms !important;
@@ -454,6 +462,10 @@ h1 {
     #Guide_Button,
     .close-button img {
         transition: none;
+    }
+
+    #BG.heat-haze {
+        filter: none;
     }
 }
 
