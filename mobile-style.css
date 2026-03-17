@@ -337,12 +337,14 @@ h1 {
     padding: 0;
     border-radius: 1em;
     background-color: black;
-    max-width: 25%;
+    min-width: 30%;
+    max-width: 45%;
     max-height: 30%;
     min-height: min-content;
     font-size: 1em;
     pointer-events: auto;
     z-index: 15;
+    transition: transform 0.15s ease;
 }
 
 #art1Preview {
@@ -374,13 +376,11 @@ h1 {
     text-decoration: underline;
     padding: 0.75em 1em;
     min-height: 48px;
-    min-width: 48px;
     line-height: 1.4;
     border-radius: 1em;
-    transition: transform 0.15s ease;
 }
 
-.artlink:active {
+.preview:active {
     transform: scale(0.92);
 }
 
