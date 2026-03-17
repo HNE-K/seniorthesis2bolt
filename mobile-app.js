@@ -160,13 +160,14 @@ class EunicornWorld {
             if (data) {
                 this.left_coord = parseFloat(data.unicorn_x) || 0;
                 this.top_coord = parseFloat(data.unicorn_y) || 0;
-                this.currentSeason = data.current_season || 'spring';
+                const restoredSeason = data.current_season || 'spring';
 
                 this.unicorn.style.left = this.left_coord + 'px';
                 this.unicorn.style.top = this.top_coord + 'px';
 
-                const seasonValue = this.getSeasonSliderValue(this.currentSeason);
+                const seasonValue = this.getSeasonSliderValue(restoredSeason);
                 this.slider.value = seasonValue;
+                this.currentSeason = 'spring';
                 this.updateSeason();
             }
         }
