@@ -82,6 +82,8 @@ class EunicornWorld {
         await this.initSession();
         this.preloadImages();
         this.setupEventListeners();
+
+        await this.waitForBGLoad();
         this.cacheLayoutDimensions();
         this.startAnimationLoop();
         this.initSnowAnimation();
@@ -113,6 +115,15 @@ class EunicornWorld {
             const container = document.getElementById(id);
             const clone = template.content.cloneNode(true);
             container.appendChild(clone);
+        });
+    }
+
+    waitForBGLoad() {
+        if (this.BG_img.complete && this.BG_img.naturalWidth > 0) {
+            return Promise.resolve();
+        }
+        return new Promise(resolve => {
+            this.BG_img.addEventListener('load', resolve, { once: true });
         });
     }
 
