@@ -277,6 +277,101 @@ h1 {
     transform: rotateZ(var(--thumb-rotate, 0deg));
 }
 
+.dot {
+    display: inline-block;
+    position: absolute;
+    height: 4%;
+    width: auto;
+    fill: blanchedalmond;
+    filter: drop-shadow(0 0 0.25rem rgb(255, 217, 0));
+    animation-name: spin;
+    animation-duration: 2500ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+    pointer-events: none;
+}
+
+.dot .cls-1 {
+    animation-name: blinking;
+    animation-duration: 1250ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes blinking {
+    0% { fill: black; stroke: black; }
+    100% { fill: blanchedalmond; stroke: blanchedalmond; }
+}
+
+#art1 {
+    top: 30%;
+    left: 32%;
+}
+
+#art2 {
+    top: 50%;
+    left: 5%;
+}
+
+#art3 {
+    top: 80%;
+    left: 44%;
+}
+
+#art4 {
+    top: 37%;
+    left: 54%;
+}
+
+.preview {
+    display: inline-block;
+    visibility: hidden;
+    position: absolute;
+    padding: 0.5em;
+    border-radius: 1em;
+    background-color: black;
+    max-width: 15%;
+    max-height: 30%;
+    min-height: min-content;
+    font-size: 1em;
+    pointer-events: none;
+}
+
+#art1Preview {
+    top: 30%;
+    left: 34%;
+}
+
+#art2Preview {
+    top: 50%;
+    left: 7%;
+}
+
+#art3Preview {
+    top: 80%;
+    left: 46%;
+}
+
+#art4Preview {
+    top: 37%;
+    left: 56%;
+}
+
+.artlink {
+    color: white;
+    background-color: black;
+    font-family: Laila;
+    font-size: clamp(10pt, 2vh, 18pt);
+    text-decoration: underline;
+}
+
 @media (min-width: 768px) {
     #slider {
         width: 70vw;
