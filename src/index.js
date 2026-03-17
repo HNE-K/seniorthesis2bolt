@@ -244,9 +244,9 @@ function init() {
             || // 6th box: fjord middle bend
             (left_coord > 0.44*BG_section.clientWidth && left_coord < 0.49*BG_section.clientWidth && top_coord < 0.45*BG_section.clientHeight && top_coord >= 0.33*BG_section.clientHeight)
             || // 7th box: fjord fork
-            (left_coord > 0.41*BG_section.clientWidth && left_coord < 0.45*BG_section.clientWidth && top_coord < 0.55*BG_section.clientHeight && top_coord >= 0.45*BG_section.clientHeight)
+            (left_coord > 0.40*BG_section.clientWidth && left_coord < 0.47*BG_section.clientWidth && top_coord < 0.52*BG_section.clientHeight && top_coord >= 0.43*BG_section.clientHeight)
             || // 8th box: flow from mountain into fjord
-            (left_coord > 0.3*BG_section.clientWidth && left_coord <= 0.41*BG_section.clientWidth && top_coord < 0.55*BG_section.clientHeight && top_coord >= 0.48*BG_section.clientHeight)
+            (left_coord > 0.33*BG_section.clientWidth && left_coord <= 0.40*BG_section.clientWidth && top_coord < 0.53*BG_section.clientHeight && top_coord >= 0.49*BG_section.clientHeight)
             || // 9th box: crater lake
             (left_coord > 0.69*BG_section.clientWidth && left_coord < 0.8*BG_section.clientWidth && top_coord < 0.78*BG_section.clientHeight && top_coord > 0.55*BG_section.clientHeight)
         ) { // there are 9 frames for swimming rn

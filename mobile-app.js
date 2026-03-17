@@ -351,9 +351,9 @@ class EunicornWorld {
             // 6th box: fjord middle bend
             || (cx > 0.44 && cx < 0.52 && cy < 0.45 && cy >= 0.33)
             // 7th box: fjord fork
-            || (cx > 0.38 && cx < 0.49 && cy < 0.55 && cy >= 0.43)
+            || (cx > 0.40 && cx < 0.47 && cy < 0.52 && cy >= 0.43)
             // 8th box: flow from mountain into fjord
-            || (cx > 0.30 && cx <= 0.41 && cy < 0.55 && cy >= 0.48)
+            || (cx > 0.33 && cx <= 0.40 && cy < 0.53 && cy >= 0.49)
             // 9th box: crater lake
             || (cx > 0.70 && cx < 0.84 && cy < 0.78 && cy > 0.55)
         );
