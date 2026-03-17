@@ -36,6 +36,28 @@ section {
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+    position: relative;
+    z-index: 1;
+}
+
+#BG_img_old {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.8s ease;
+}
+
+#BG_img_old.fading {
+    opacity: 1;
 }
 
 /* #leaves_container, #leaves_canvas, */
@@ -301,16 +323,16 @@ h1 {
     display: inline-block;
     visibility: hidden;
     position: absolute;
-    padding: 0.5em;
+    padding: 0;
     border-radius: 1em;
     background-color: black;
     max-width: 15%; /* stays there upon reaching max-width even if text wraps down leaving a gap */
     max-height: 30%;
-    /* min-width: 4%; */
     min-height: min-content;
-    /* width: 10%; */
     font-size: 1em;
-} 
+    pointer-events: auto;
+    z-index: 5;
+}
 
 /*positions are the corresponding dot's same top but left +2 */
 #art1Preview {
@@ -339,16 +361,18 @@ h1 {
 }
 
 .artlink {
+    display: block;
     color: white;
     background-color: black;
-	/* border: none;
     border-radius: 1em;
-	padding: 0.5em;
-    margin: 0.5em; */
+    padding: 0.6em 0.9em;
 	cursor: url("images/Mouse_Pointer.png"), pointer;
     font-family: Laila;
     font-size: clamp(12pt, 3vh, 24pt);
     text-decoration: underline;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
 }
 
 .artlink:hover {

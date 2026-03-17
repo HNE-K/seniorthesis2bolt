@@ -1,6 +1,7 @@
 // Global variables used as trackers later
 var slider = null;
 var currentSeason = "spring";
+var BG_img = null;
 // Unicorn trackers
 var BG_section = null;
 var unicorn = null;
@@ -150,55 +151,56 @@ function updatePos(event) {
 
 }
 
+var BG_img_old = null;
+var _seasonTransitionId = 0;
+
 function sliderChecker() {
+    var newSeason, newSrc, labels, snowVisible;
     if (slider.value >= 1 && slider.value <= 25) {
-        currentSeason = "spring";
-        BG_img.src = "images/Senior_Thesis_Map_Spring.png";
-        art1Link.innerHTML = "Mt. Creativity";
-        art2Link.innerHTML = "The First Fairy's Shrine";
-        art3Link.innerHTML = "Forest of Guardians";
-        art4Link.innerHTML = "Passage to Paradise";
+        newSeason = "spring";
+        newSrc = "images/Senior_Thesis_Map_Spring.png";
+        labels = ["Mt. Creativity", "The First Fairy's Shrine", "Forest of Guardians", "Passage to Paradise"];
+        snowVisible = false;
+    } else if (slider.value >= 26 && slider.value <= 50) {
+        newSeason = "summer";
+        newSrc = "images/Senior_Thesis_Map_Summer.png";
+        labels = ["Magmanimous Dragon's Soup Kitchen", "Toasty Refuge", "Charcoal Woods", "Cliff Dragon's Diving Board"];
+        snowVisible = false;
+    } else if (slider.value >= 51 && slider.value <= 75) {
+        newSeason = "autumn";
+        newSrc = "images/Senior_Thesis_Map_Autumn.png";
+        labels = ["Rebirth Recycling, Inc.", "Phoenix Airlines Landing Pad", "Goldenbell Woods", "Silverscissor Gates"];
+        snowVisible = false;
+    } else {
+        newSeason = "winter";
+        newSrc = "images/Senior_Thesis_Map_Winter.png";
+        labels = ["Mt. Vein", "Snowfox Den", "Nightlight Forest", "Fortress Cliffs"];
+        snowVisible = true;
     }
-    if (slider.value >= 26 && slider.value <= 50) {
-        currentSeason = "summer";
-        BG_img.src = "images/Senior_Thesis_Map_Summer.png";
-        // leaves_container.style.display = "none";
-        // leaves_canvas.style.display = "none";
-        art1Link.innerHTML = "Magmanimous Dragon's Soup Kitchen";
-        art2Link.innerHTML = "Toasty Refuge";
-        art3Link.innerHTML = "Charcoal Woods";
-        art4Link.innerHTML = "Cliff Dragon's Diving Board";
-    }
-    if (slider.value >= 51 && slider.value <= 75) {
-        // initial batch of leaves
-        // purpose: natural initial position. Looks better than without (straight line eww) but still a huge and separated batch is not ideal
-        // if (currentSeason != "autumn") {
-        //     var leaves = document.querySelectorAll(".leaf");
-        //     for (var j = 0; j < leaves.length; j++) {
-        //         leaves[j].style.top = Math.random()*window.innerHeight + "px";
-        //         leaves[j].style.visibility = "hidden"; // just hide this batch. the subsequent leaves look natural enough.
-        //     }
-        // }
-        currentSeason = "autumn";
-        BG_img.src = "images/Senior_Thesis_Map_Autumn.png";
-        snow_canvas.style.display = "none";
-        // leaves_container.style.display = "block";
-        // leaves_canvas.style.display = "block";
-        art1Link.innerHTML = "Rebirth Recycling, Inc.";
-        art2Link.innerHTML = "Phoenix Airlines Landing Pad";
-        art3Link.innerHTML = "Goldenbell Woods";
-        art4Link.innerHTML = "Silverscissor Gates";
-    }
-    if (slider.value >= 76 && slider.value <= 100) {
-        currentSeason = "winter";
-        BG_img.src = "images/Senior_Thesis_Map_Winter.png";
-        // leaves_container.style.display = "none";
-        // leaves_canvas.style.display = "none";
-        snow_canvas.style.display = "inline-block";
-        art1Link.innerHTML = "Mt. Vein";
-        art2Link.innerHTML = "Snowfox Den";
-        art3Link.innerHTML = "Nightlight Forest";
-        art4Link.innerHTML = "Fortress Cliffs"
+
+    art1Link.innerHTML = labels[0];
+    art2Link.innerHTML = labels[1];
+    art3Link.innerHTML = labels[2];
+    art4Link.innerHTML = labels[3];
+    snow_canvas.style.display = snowVisible ? "inline-block" : "none";
+
+    if (newSeason !== currentSeason) {
+        currentSeason = newSeason;
+        sessionStorage.setItem("currentSeason", newSeason);
+        sessionStorage.setItem("sliderValue", slider.value);
+
+        _seasonTransitionId++;
+        var transitionId = _seasonTransitionId;
+
+        BG_img_old.src = BG_img.src;
+        BG_img_old.classList.add("fading");
+        BG_img.src = newSrc;
+
+        BG_img_old.addEventListener("transitionend", function onEnd() {
+            if (transitionId !== _seasonTransitionId) return;
+            BG_img_old.classList.remove("fading");
+            BG_img_old.removeEventListener("transitionend", onEnd);
+        });
     }
 }
 
@@ -289,111 +291,85 @@ function init() {
     slider.addEventListener("input", (event) => {
         slider.style.setProperty("--thumb-rotate", `${(event.target.value/100) * 2160}deg`);
     });
-    var BG_img = document.getElementById("BG_img");
+    BG_img = document.getElementById("BG_img");
+    BG_img_old = document.getElementById("BG_img_old");
     var snow_canvas = document.getElementById("snow_canvas");
-    // var leaves_container = document.getElementById("leaves_container");
-    // var leaves_canvas = document.getElementById("leaves_canvas");
     art1Link = document.getElementById("art1Link");
     art2Link = document.getElementById("art2Link");
     art3Link = document.getElementById("art3Link");
     art4Link = document.getElementById("art4Link");
-    sliderChecker(); // run once to initialize
-    slider.oninput = sliderChecker; // run again upon moving the slider
-    // slider.value = 1; // reset slider knob upon reloading webpage
+
+    var savedSeason = sessionStorage.getItem("currentSeason");
+    var savedSliderValue = sessionStorage.getItem("sliderValue");
+    if (savedSeason && savedSliderValue) {
+        slider.value = savedSliderValue;
+        slider.style.setProperty("--thumb-rotate", `${(savedSliderValue/100) * 2160}deg`);
+    }
+    sliderChecker();
+    slider.oninput = sliderChecker;
 
     // WINTER SNOW ANIMATION
-    // firstly set up by getting canvas and context
-    // var snow_canvas = document.getElementById("snow_canvas");
     var snow_context = snow_canvas.getContext("2d");
-    // snow_context.translate(0.5, 0.5);
-    // set canvas's dimensions to viewport's or the parent section's
     var h = document.getElementById("BG").clientHeight;
     var w = document.getElementById("BG").clientWidth;
-    // console.log(typeof(h), typeof(w));
     snow_canvas.height = h;
     snow_canvas.width = w;
-    // console.log(snow_canvas.height, snow_canvas.width);
-    // if user resizes the window, adjust canvas size
-    // function resize_canvas(ev) {
-    //     w = canvas.width = window.innerWidth;
-    //     h = canvas.height = window.innerHeight;
-    // };
-    // window.addEventListener("resize", resize_canvas);
-    // Particles/snowflakes
-    var max_flakes = 100;
+
+    var max_flakes = 400;
     var flakes = [];
-    // Random number generator in range from min to max
+    var flakeSprites = [];
+
     function random(min, max) {
-        return min + Math.random() * (max - min + 1);
-    };
-    // Generate the values associated with each snowflake & save them into the array
-    function setup_flakes() {
-        for (var i = 0; i < max_flakes; i++) {
-            flakes.push(
-                {
-                    x: Math.random() * w, // Math.random() generates a decimal between 0 & 1
-                    y: Math.random() * h,
-                    opacity: Math.random(),
-                    speedX: random(-11, 11),
-                    speedY: random(7, 15),
-                    radius: random(0.5, 2.2),
-                }
-            )
-        }
-    };
-    // Use the saved values to generate snowflakes
-    function generate_flakes() {
-        for (var i = 0; i < max_flakes; i++) {
-            // Canvas has a function for creating a gradient between 2 circles. Create it on the Context
-            var gradient = snow_context.createRadialGradient(
-                flakes[i].x, // x-coordinate of starting circle's origin
-                flakes[i].y, // y-coordinate of starting circle's origin
-                0, // radius of starting circle
-                flakes[i].x, // x-coordinate of ending circle's origin
-                flakes[i].y, // y-coordinate of ending circle's origin
-                flakes[i].radius
-            );
-            // Canvas's addColorStop function is like adding a marker on a gradient slider. Takes in position 0-1 along the "slider" and color's CSS value
-            gradient.addColorStop(0, "rgba(255, 255, 255," + flakes[i].opacity + ")"); // white, but with the opacity saved in the array
-            gradient.addColorStop(0.8, "rgba(210, 236, 242," + flakes[i].opacity + ")"); // light blue " "
-            gradient.addColorStop(1, "rgba(237, 247, 249," + flakes[i].opacity + ")"); // even lighter blue " "
-            // Draw the snowflake using arc function on Canvas Context
-            snow_context.beginPath(); // this function starts drawing a new path
-            snow_context.arc(
-                flakes[i].x, // x-coordinate of arc's center/origin
-                flakes[i].y, // y-coordinate of arc's center/origin
-                flakes[i].radius, // radius of arc (arc just means partial or full circle)
-                0, // starting angle
-                Math.PI*2, // ending angle (circumference formula)
-                false // counterclockwise/clockwise whatever lol
-            );
-            // var gradient is of variable type CanvasGradient, acceptable for fillStyle parameter.
-            // the gradient and Context/snowflake have the same dimensions sourced from the array :)
-            snow_context.fillStyle = gradient;
-            snow_context.fill();
-        }
-    };
-    function move_flakes() {
-        for (var i = 0; i < flakes.length; i++) {
-            flakes[i].x += flakes[i].speedX; // move right/left
-            flakes[i].y += flakes[i].speedY; // move up/down
-            // reset snowflakes that went off-canvas to anywhere along the top of canvas
-            if (flakes[i].y > h) {
-                flakes[i].x = Math.random() * w;
-                flakes[i].y = -50; // negative value, thus actually off-screen so the reset snowflake doesn't appear suddenly
-            }
-        }
-    };
-    // A function that runs the generation and movement of snowflakes
+        return min + Math.random() * (max - min);
+    }
+
+    for (var i = 0; i < max_flakes; i++) {
+        var radius = random(0.5, 2.5);
+        var opacity = random(0.3, 0.9);
+        var size = Math.ceil(radius * 2 + 2);
+        var offscreen = document.createElement("canvas");
+        offscreen.width = size;
+        offscreen.height = size;
+        var ctx = offscreen.getContext("2d");
+        var cx = size / 2;
+        var cy = size / 2;
+        var gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+        gradient.addColorStop(0, "rgba(255, 255, 255, " + opacity + ")");
+        gradient.addColorStop(0.5, "rgba(230, 240, 245, " + (opacity * 0.7) + ")");
+        gradient.addColorStop(1, "rgba(220, 235, 240, 0)");
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, Math.PI * 2, false);
+        ctx.fillStyle = gradient;
+        ctx.fill();
+
+        flakes.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            speedY: random(0.3, 1.5),
+            swayAmp: random(0.2, 1.0),
+            swaySpeed: random(0.005, 0.02),
+            phase: Math.random() * Math.PI * 2
+        });
+        flakeSprites.push(offscreen);
+    }
+
+    var snowTick = 0;
     function snowfall() {
-        // start with a clean Context
-        snow_context.clearRect(0, 0, w, h); // top left coordinates of rectangle and its dimensions
-        generate_flakes();
-        move_flakes();
-    };
-    // Actually run the functions defined above!
-    setInterval(snowfall, 50);
-    setup_flakes();
+        snow_context.clearRect(0, 0, w, h);
+        snowTick++;
+        for (var i = 0; i < max_flakes; i++) {
+            var f = flakes[i];
+            var spriteSize = flakeSprites[i].width;
+            snow_context.drawImage(flakeSprites[i], f.x - spriteSize / 2, f.y - spriteSize / 2);
+            f.x += Math.sin(snowTick * f.swaySpeed + f.phase) * f.swayAmp;
+            f.y += f.speedY;
+            if (f.y > h + 10) { f.x = Math.random() * w; f.y = -10; }
+            if (f.x > w + 10) f.x = -10;
+            if (f.x < -10) f.x = w + 10;
+        }
+        requestAnimationFrame(snowfall);
+    }
+    requestAnimationFrame(snowfall);
 
     
     // AUTUMN LEAVES ANIMATION
