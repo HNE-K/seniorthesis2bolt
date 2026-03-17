@@ -341,9 +341,9 @@ class EunicornWorld {
             // 4th box: fjord entrance
             || (cx > 0.38 && cx < 0.47 && cy < 0.25 && cy > 0.15)
             // 5th box: fjord middle
-            || (cx > 0.41 && cx < 0.49 && cy < 0.33 && cy >= 0.25)
+            || (cx > 0.41 && cx < 0.52 && cy < 0.33 && cy >= 0.25)
             // 6th box: fjord middle bend
-            || (cx > 0.44 && cx < 0.49 && cy < 0.45 && cy >= 0.33)
+            || (cx > 0.44 && cx < 0.52 && cy < 0.45 && cy >= 0.33)
             // 7th box: fjord fork
             || (cx > 0.38 && cx < 0.49 && cy < 0.55 && cy >= 0.43)
             // 8th box: flow from mountain into fjord
