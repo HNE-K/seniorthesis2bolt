@@ -51,6 +51,25 @@ class EunicornWorld {
         this.slider = document.getElementById('slider');
         this.snow_canvas = document.getElementById('snow_canvas');
 
+        this.artPreviews = [
+            document.getElementById('art1Preview'),
+            document.getElementById('art2Preview'),
+            document.getElementById('art3Preview'),
+            document.getElementById('art4Preview')
+        ];
+        this.artLinks = [
+            document.getElementById('art1Link'),
+            document.getElementById('art2Link'),
+            document.getElementById('art3Link'),
+            document.getElementById('art4Link')
+        ];
+        this.artPositions = [
+            { top: 0.30, left: 0.32 },
+            { top: 0.50, left: 0.05 },
+            { top: 0.80, left: 0.44 },
+            { top: 0.37, left: 0.54 }
+        ];
+
         await this.initSession();
         this.preloadImages();
         this.setupEventListeners();
@@ -305,6 +324,7 @@ class EunicornWorld {
         this.unicorn.style.left = this.left_coord + 'px';
         this.unicorn.style.top = this.top_coord + 'px';
 
+        this.checkArtProximity();
         this.updateCameraPosition();
     }
 
@@ -424,21 +444,52 @@ class EunicornWorld {
             this.currentSeason = 'spring';
             this.BG_img.src = this.mapImages.spring;
             this.snow_canvas.style.display = 'none';
+            this.artLinks[0].innerHTML = 'Mt. Creativity';
+            this.artLinks[1].innerHTML = "The First Fairy's Shrine";
+            this.artLinks[2].innerHTML = 'Forest of Guardians';
+            this.artLinks[3].innerHTML = 'Passage to Paradise';
         } else if (value >= 26 && value <= 50) {
             this.currentSeason = 'summer';
             this.BG_img.src = this.mapImages.summer;
             this.snow_canvas.style.display = 'none';
+            this.artLinks[0].innerHTML = "Magmanimous Dragon's Soup Kitchen";
+            this.artLinks[1].innerHTML = 'Toasty Refuge';
+            this.artLinks[2].innerHTML = 'Charcoal Woods';
+            this.artLinks[3].innerHTML = "Cliff Dragon's Diving Board";
         } else if (value >= 51 && value <= 75) {
             this.currentSeason = 'autumn';
             this.BG_img.src = this.mapImages.autumn;
             this.snow_canvas.style.display = 'none';
+            this.artLinks[0].innerHTML = 'Rebirth Recycling, Inc.';
+            this.artLinks[1].innerHTML = 'Phoenix Airlines Landing Pad';
+            this.artLinks[2].innerHTML = 'Goldenbell Woods';
+            this.artLinks[3].innerHTML = 'Silverscissor Gates';
         } else if (value >= 76 && value <= 100) {
             this.currentSeason = 'winter';
             this.BG_img.src = this.mapImages.winter;
             this.snow_canvas.style.display = 'inline-block';
+            this.artLinks[0].innerHTML = 'Mt. Vein';
+            this.artLinks[1].innerHTML = 'Snowfox Den';
+            this.artLinks[2].innerHTML = 'Nightlight Forest';
+            this.artLinks[3].innerHTML = 'Fortress Cliffs';
         }
 
         this.saveSession();
+    }
+
+    checkArtProximity() {
+        const bgW = this.BG_section.offsetWidth;
+        const bgH = this.BG_section.offsetHeight;
+        const ux = this.left_coord / bgW;
+        const uy = this.top_coord / bgH;
+        const threshold = 0.06;
+
+        for (let i = 0; i < this.artPositions.length; i++) {
+            const dx = ux - this.artPositions[i].left;
+            const dy = uy - this.artPositions[i].top;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            this.artPreviews[i].style.visibility = dist < threshold ? 'visible' : 'hidden';
+        }
     }
 
     initSnowAnimation() {
