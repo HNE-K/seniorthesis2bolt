@@ -349,7 +349,7 @@ class EunicornWorld {
             // 8th box: flow from mountain into fjord
             || (cx > 0.30 && cx <= 0.41 && cy < 0.55 && cy >= 0.48)
             // 9th box: crater lake
-            || (cx > 0.66 && cx < 0.80 && cy < 0.78 && cy > 0.55)
+            || (cx > 0.70 && cx < 0.84 && cy < 0.78 && cy > 0.55)
         );
     }
 
