@@ -228,33 +228,33 @@ function init() {
     setInterval(function () {
         // if swimming, no need to care about isMoving
         if ( // 1st box: left half of ocean
-            (left_coord < 0.09*BG_section.clientWidth && top_coord < 0.15*BG_section.clientHeight && top_coord > 0.03*BG_section.clientHeight)
+            (left_coord < 0.09*BG_section.clientWidth && top_coord < 0.26*BG_section.clientHeight && top_coord > 0.14*BG_section.clientHeight)
             || // 2nd box: right half of ocean before mountain
-            (left_coord > 0.09*BG_section.clientWidth && left_coord < 0.22*BG_section.clientWidth && top_coord < 0.2*BG_section.clientHeight && top_coord > 0.03*BG_section.clientHeight)
+            (left_coord > 0.09*BG_section.clientWidth && left_coord < 0.22*BG_section.clientWidth && top_coord < 0.31*BG_section.clientHeight && top_coord > 0.14*BG_section.clientHeight)
             || // 3rd box: corner next to mountaintop
-            (left_coord > 0.22*BG_section.clientWidth && left_coord < 0.25*BG_section.clientWidth && top_coord < 0.1*BG_section.clientHeight && top_coord > 0.03*BG_section.clientHeight)
+            (left_coord > 0.22*BG_section.clientWidth && left_coord < 0.25*BG_section.clientWidth && top_coord < 0.21*BG_section.clientHeight && top_coord > 0.14*BG_section.clientHeight)
             || // 3.5a1 box: very top ocean strip (wide)
-            (left_coord > 0.22*BG_section.clientWidth && left_coord < 0.30*BG_section.clientWidth && top_coord < 0.06*BG_section.clientHeight && top_coord >= 0.03*BG_section.clientHeight)
+            (left_coord > 0.22*BG_section.clientWidth && left_coord < 0.30*BG_section.clientWidth && top_coord < 0.17*BG_section.clientHeight && top_coord >= 0.14*BG_section.clientHeight)
             || // 3.5a2 box: ocean strip below top (narrower to avoid peak)
-            (left_coord > 0.22*BG_section.clientWidth && left_coord < 0.26*BG_section.clientWidth && top_coord < 0.10*BG_section.clientHeight && top_coord >= 0.06*BG_section.clientHeight)
+            (left_coord > 0.22*BG_section.clientWidth && left_coord < 0.26*BG_section.clientWidth && top_coord < 0.21*BG_section.clientHeight && top_coord >= 0.17*BG_section.clientHeight)
             || // 3.5b box: lower ocean alongside mountain peak (narrower)
-            (left_coord > 0.22*BG_section.clientWidth && left_coord < 0.26*BG_section.clientWidth && top_coord < 0.18*BG_section.clientHeight && top_coord >= 0.10*BG_section.clientHeight)
+            (left_coord > 0.22*BG_section.clientWidth && left_coord < 0.26*BG_section.clientWidth && top_coord < 0.29*BG_section.clientHeight && top_coord >= 0.21*BG_section.clientHeight)
             || // 4th box: fjord entrance
-            (left_coord > 0.38*BG_section.clientWidth && left_coord < 0.47*BG_section.clientWidth && top_coord < 0.25*BG_section.clientHeight && top_coord > 0.15*BG_section.clientHeight)
+            (left_coord > 0.38*BG_section.clientWidth && left_coord < 0.47*BG_section.clientWidth && top_coord < 0.36*BG_section.clientHeight && top_coord > 0.26*BG_section.clientHeight)
             || // 5th box: fjord middle
-            (left_coord > 0.41*BG_section.clientWidth && left_coord < 0.49*BG_section.clientWidth && top_coord < 0.33*BG_section.clientHeight && top_coord >= 0.25*BG_section.clientHeight)
+            (left_coord > 0.41*BG_section.clientWidth && left_coord < 0.49*BG_section.clientWidth && top_coord < 0.44*BG_section.clientHeight && top_coord >= 0.36*BG_section.clientHeight)
             || // 6th box: fjord middle bend (wide)
-            (left_coord > 0.40*BG_section.clientWidth && left_coord < 0.52*BG_section.clientWidth && top_coord < 0.40*BG_section.clientHeight && top_coord >= 0.33*BG_section.clientHeight)
+            (left_coord > 0.40*BG_section.clientWidth && left_coord < 0.52*BG_section.clientWidth && top_coord < 0.51*BG_section.clientHeight && top_coord >= 0.44*BG_section.clientHeight)
             || // 7a box: fjord lower-upper
-            (left_coord > 0.39*BG_section.clientWidth && left_coord < 0.49*BG_section.clientWidth && top_coord < 0.44*BG_section.clientHeight && top_coord >= 0.40*BG_section.clientHeight)
+            (left_coord > 0.39*BG_section.clientWidth && left_coord < 0.49*BG_section.clientWidth && top_coord < 0.55*BG_section.clientHeight && top_coord >= 0.51*BG_section.clientHeight)
             || // 7b box: fjord lower-middle
-            (left_coord > 0.39*BG_section.clientWidth && left_coord < 0.47*BG_section.clientWidth && top_coord < 0.47*BG_section.clientHeight && top_coord >= 0.44*BG_section.clientHeight)
+            (left_coord > 0.39*BG_section.clientWidth && left_coord < 0.47*BG_section.clientWidth && top_coord < 0.58*BG_section.clientHeight && top_coord >= 0.55*BG_section.clientHeight)
             || // 7c box: fjord lower-bottom
-            (left_coord > 0.38*BG_section.clientWidth && left_coord < 0.45*BG_section.clientWidth && top_coord < 0.50*BG_section.clientHeight && top_coord >= 0.47*BG_section.clientHeight)
+            (left_coord > 0.38*BG_section.clientWidth && left_coord < 0.45*BG_section.clientWidth && top_coord < 0.61*BG_section.clientHeight && top_coord >= 0.58*BG_section.clientHeight)
             || // 8th box: flow from mountain into fjord
-            (left_coord > 0.35*BG_section.clientWidth && left_coord <= 0.43*BG_section.clientWidth && top_coord < 0.53*BG_section.clientHeight && top_coord >= 0.50*BG_section.clientHeight)
+            (left_coord > 0.35*BG_section.clientWidth && left_coord <= 0.43*BG_section.clientWidth && top_coord < 0.64*BG_section.clientHeight && top_coord >= 0.61*BG_section.clientHeight)
             || // 9th box: crater lake
-            (left_coord > 0.69*BG_section.clientWidth && left_coord < 0.8*BG_section.clientWidth && top_coord < 0.78*BG_section.clientHeight && top_coord > 0.55*BG_section.clientHeight)
+            (left_coord > 0.69*BG_section.clientWidth && left_coord < 0.8*BG_section.clientWidth && top_coord < 0.89*BG_section.clientHeight && top_coord > 0.66*BG_section.clientHeight)
         ) { // there are 9 frames for swimming rn
             // deactivate running and standing frames. For some reason computation is faster if deactivate them separately. Don't do % 18.
             frames[i % 8].style.display = "none";
