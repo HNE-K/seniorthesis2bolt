@@ -1,8 +1,16 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+let supabase = null;
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+async function initSupabase() {
+    try {
+        const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+        const supabaseUrl = import.meta.env?.VITE_SUPABASE_URL;
+        const supabaseKey = import.meta.env?.VITE_SUPABASE_ANON_KEY;
+        if (supabaseUrl && supabaseKey) {
+            supabase = createClient(supabaseUrl, supabaseKey);
+        }
+    } catch (_) {
+    }
+}
 
 class EunicornWorld {
     constructor() {
@@ -82,6 +90,7 @@ class EunicornWorld {
             { top: 0.37, left: 0.54 }
         ];
 
+        await initSupabase();
         await this.initSession();
         this.preloadImages();
         this.setupEventListeners();
@@ -138,6 +147,8 @@ class EunicornWorld {
     }
 
     async initSession() {
+        if (!supabase) return;
+
         this.sessionId = localStorage.getItem('eunicorn_session_id');
 
         if (!this.sessionId) {
@@ -192,6 +203,8 @@ class EunicornWorld {
     }
 
     async saveSession() {
+        if (!supabase || !this.sessionId) return;
+
         const now = Date.now();
         if (now - this.lastSaveTime < this.saveDebounceMs) {
             return;
