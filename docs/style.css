@@ -1,143 +1,3 @@
-html {
-    cursor: url("images/Mouse.png"), auto;
-}
-
-body {
-    height: 100vh;
-    width: 100vw;
-    margin: 0;
-    border: 0;
-    padding: 0;
-}
-
-section {
-    margin: 0;
-    border: 0;
-    padding: 0;
-}
-
-#BG {
-    display: inline-block; /* necessary to make body the same dimensions as #BG_img. Use Inspect to check their dimensions. */
-    height: 180vh;
-    position: absolute; /* pushes BG_img into the background */
-    /* background-image: url("images/Senior_Thesis_Map_Spring.png");
-    background-position: top left;
-    background-origin: border-box;
-    background-attachment: scroll;
-    background-size: 75%; */
-}
-
-#BG_img {
-    height: 100%; /* % of its container, #BG */
-    /* prevent from getting highlighted blue */
-    pointer-events: none;
-    -webkit-user-drag: none;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    position: relative;
-    z-index: 1;
-}
-
-#BG_img_old {
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    -webkit-user-drag: none;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    opacity: 0;
-    z-index: 0;
-    transition: opacity 0.8s ease;
-}
-
-#BG_img_old.fading {
-    opacity: 1;
-}
-
-/* #leaves_container, #leaves_canvas, */
-#snow_canvas {
-    display: none;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    /* prevent from getting highlighted blue */
-    pointer-events: none;
-    -webkit-user-drag: none;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-}
-
-#title {
-    position: absolute; /* lets this div overlap with sections */
-    line-height: 0em; /* line-height = leading */
-    margin-inline: 1em; /* left and right */
-    filter: drop-shadow(0 0 0.25rem rgb(255, 217, 0));
-}
-
-button {
-    filter: drop-shadow(0 0 0.25rem rgb(255, 217, 0));
-    /* removing CSS default button appearance. Using <button> allows Tab to highlight and Enter it. */
-    background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	cursor: url("images/Mouse_Pointer.png"), pointer;
-}
-
-#open_instructions {
-    position: fixed;
-    right: 2%; /* % of its container, #fixed_stuff */
-    top: 2%;
-    height: 15%;
-    min-height: 40px;
-    border-radius: 50%; /* the button was sticking out of the icon */
-}
-
-#Guide_Button {
-    height: 100%;
-}
-
-#Guide_Button:hover {
-    cursor: url("images/Mouse_Pointer.png"), pointer;
-    transform: rotate(25deg);
-}
-
-#instructions {
-    z-index: 3;
-    position: fixed;
-    display: block;
-    padding: 2em;
-    border-radius: 25px;
-    background-color:aliceblue;
-    /* background-position: left top; */
-    /* background-size: cover; */
-    height: 45%; /* must be a set height to control the inner div's overflow */
-    min-width: 40%;
-    top: 20%;
-    left: 20%;
-    right: 20%;
-    /* BORDERS https://www.w3schools.com/cssref/tryit.php?filename=trycss3_border-image-repeat */
-    --mask: 
-        linear-gradient(#000 0 0) 50%/calc(100% - 55.5px) calc(100% - 55.5px) no-repeat,
-        radial-gradient(farthest-side,#000 98%,#0000) 0 0/60px 60px round;
-    -webkit-mask: var(--mask);
-    mask: var(--mask);
-}
-
-#instructions div {
-    height: 100%;
-    overflow: auto; /* makes overflow generate a scroll bar */
-    text-align: center;
-}
-
 @font-face {
     font-family: "Laila-Bold";
     src: url("fonts/Laila/Laila-Bold.ttf");
@@ -153,57 +13,238 @@ button {
     src: url("fonts/Laila/Laila-Medium.ttf");
 }
 
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    touch-action: none;
+}
+
+body {
+    font-family: Laila, sans-serif;
+}
+
+#game-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: #87ceeb;
+}
+
+#viewport {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    touch-action: none;
+}
+
+#BG {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(143vh * (4096 / 1714));
+    height: 143vh;
+    transform-origin: 0 0;
+    touch-action: none;
+    will-change: transform;
+}
+
+#BG_img,
+#BG_img_old {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+}
+
+#BG_img_old {
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.8s ease;
+}
+
+#BG_img_old.fading {
+    opacity: 1;
+}
+
+#snow_canvas {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    z-index: 1;
+}
+
+#unicorn {
+    position: absolute;
+    top: 18%;
+    left: 3%;
+    width: 12vw;
+    min-width: 60px;
+    max-width: 120px;
+    height: auto;
+    z-index: 10;
+    filter: drop-shadow(0rem 0rem 0.25rem rgb(50, 50, 50));
+    transform: scaleX(-1);
+    pointer-events: none;
+    will-change: left, top, transform;
+}
+
+#unicorn img {
+    width: 100%;
+    height: auto;
+    display: none;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+}
+
+#unicorn img.frame-active {
+    display: inline-block;
+}
+
+#title {
+    position: absolute;
+    top: 2%;
+    line-height: 0em;
+    margin-inline: 1em;
+    filter: drop-shadow(0 0 0.25rem rgb(255, 217, 0));
+}
+
 h1 {
     font-family: Laila-Bold;
     font-style: normal;
-    font-size: clamp(20pt, 8vh, 48pt);
+    font-size: clamp(14pt, 5vh, 36pt);
 }
 
-#instructions div h2 {
-    margin: 0;
-    margin-bottom: 0.5em;
-    font-family: Laila-SemiBold;
-    font-style: normal;
-    font-size: clamp(16pt, 5vh, 36pt);
-}
-
-#instructions div p {
-    margin: 0;
-    font-family: Laila;
-    font-weight: normal;
-    font-style: normal;
-    font-size: clamp(12pt, 3vh, 24pt);
-}
-
-.close-button {
-    position: absolute; /*takes the button out of #instructions's padding*/
-    float: right;
-    top: 3;
-    right: 3;
+#open_instructions {
+    position: fixed;
+    top: 2%;
+    right: 2%;
     height: 15%;
+    min-height: 40px;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    z-index: 100;
+    cursor: pointer;
 }
 
-.close-button:hover {
-    cursor: url("images/Mouse_Pointer.png"), pointer;
+#Guide_Button {
+    height: 100%;
+    transition: transform 0.2s ease;
+    user-select: none;
+    filter: drop-shadow(0 0 0.5rem rgba(255, 217, 0, 0.8));
+}
+
+#open_instructions:active #Guide_Button {
     transform: rotate(25deg);
 }
 
-.close-button #X_Button {
+#instructions {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#instructions > div {
+    position: relative;
+    width: 90vw;
+    max-width: 500px;
+    max-height: 70vh;
+    background-color: rgba(240, 248, 255, 0.95);
+    border-radius: 20px;
+    padding: 1.5rem;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+#instructions h2 {
+    font-family: Laila-Bold;
+    font-size: clamp(1.2rem, 5vw, 1.8rem);
+    margin: 0 0 1rem 0;
+    color: #333;
+}
+
+#instructions p {
+    font-family: Laila;
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+    margin: 0.8rem 0;
+    color: #555;
+    line-height: 1.5;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 201;
+}
+
+.close-button img {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.2s ease;
+    filter: drop-shadow(0 0 0.5rem rgba(255, 217, 0, 0.8));
+}
+
+.close-button:active img {
+    transform: rotate(25deg);
 }
 
 #slider {
-    z-index: 2;
     -webkit-appearance: none;
-    appearance: none; /* remove default appearance */
+    appearance: none;
     position: fixed;
-    bottom: 10%;
-    left: 15%;
-    width: 70%;
-    height: 3%;
+    bottom: 8vh;
+    left: 10vw;
+    width: 80vw;
+    height: 44px;
+    min-height: 44px;
     border-radius: 25px;
-    opacity: 0.7;
+    opacity: 0.85;
     outline: none;
+    z-index: 50;
     background-image: linear-gradient(to right,
         white,
         white 24%,
@@ -219,49 +260,52 @@ h1 {
         black 75.5%,
         white 75.5%,
         white 100%);
-    cursor: url("images/Mouse.png"), auto;
+    cursor: pointer;
 }
 
 #slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    appearance: none; 
+    appearance: none;
+    width: 60px;
+    height: 60px;
+    min-width: 44px;
+    min-height: 44px;
     background-image: url(images/Slider_Knob.png);
     background-size: cover;
-    background-color: none;
-    filter: drop-shadow(0 0 0.25rem rgb(255, 217, 0));
-    aspect-ratio: 1/1;
-    height: 170%;
-    width: auto;
+    filter: drop-shadow(0 0 0.5rem rgba(255, 217, 0, 0.8));
     border-radius: 50%;
     border: none;
     outline: none;
-    cursor: url("images/Mouse_Pointer.png"), pointer;
+    cursor: pointer;
     transform: rotateZ(var(--thumb-rotate, 0deg));
 }
 
-/* slider knob for Firefox */
 #slider::-moz-range-thumb {
     -webkit-appearance: none;
     appearance: none;
+    width: 60px;
+    height: 60px;
     background-image: url(images/Slider_Knob.png);
     background-size: cover;
-    background-color: none;
-    filter: drop-shadow(0 0 0.25rem rgb(255, 217, 0));
-    aspect-ratio: 1/1; /* doesn't work in Firefox?? */
-    height: 170%;
-    width: auto;
+    filter: drop-shadow(0 0 0.5rem rgba(255, 217, 0, 0.8));
     border-radius: 50%;
     border: none;
     outline: none;
-    cursor: url("images/Mouse_Pointer.png"), pointer;
+    cursor: pointer;
     transform: rotateZ(var(--thumb-rotate, 0deg));
 }
 
-.dot {
+.dot-container {
     display: inline-block;
     position: absolute;
     height: 4%;
     width: auto;
+    pointer-events: none;
+}
+
+.dot {
+    width: auto;
+    height: 100%;
     fill: blanchedalmond;
     filter: drop-shadow(0 0 0.25rem rgb(255, 217, 0));
     animation-name: spin;
@@ -271,7 +315,6 @@ h1 {
     animation-direction: alternate;
 }
 
-/* Dot SVG's black-filled part. For its original look, check index.html */
 .dot .cls-1 {
     animation-name: blinking;
     animation-duration: 1250ms;
@@ -281,22 +324,13 @@ h1 {
 }
 
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
+
 @keyframes blinking {
-    0% {
-        fill: black;
-        stroke: black;
-    }
-    100% {
-        fill: blanchedalmond;
-        stroke: blanchedalmond;
-    }
+    0% { fill: black; stroke: black; }
+    100% { fill: blanchedalmond; stroke: blanchedalmond; }
 }
 
 #art1 {
@@ -326,15 +360,16 @@ h1 {
     padding: 0;
     border-radius: 1em;
     background-color: black;
-    max-width: 15%; /* stays there upon reaching max-width even if text wraps down leaving a gap */
+    min-width: min-content;
+    max-width: 55vw;
     max-height: 30%;
     min-height: min-content;
     font-size: 1em;
     pointer-events: auto;
-    z-index: 5;
+    z-index: 15;
+    transition: transform 0.15s ease;
 }
 
-/*positions are the corresponding dot's same top but left +2 */
 #art1Preview {
     top: 30%;
     left: 34%;
@@ -342,7 +377,7 @@ h1 {
 
 #art2Preview {
     top: 50%;
-    left: 7%
+    left: 7%;
 }
 
 #art3Preview {
@@ -355,48 +390,88 @@ h1 {
     left: 56%;
 }
 
-.preview div {
-    overflow: auto;
-    display: none;
-}
-
 .artlink {
     display: block;
     color: white;
     background-color: black;
-    border-radius: 1em;
-    padding: 0.6em 0.9em;
-	cursor: url("images/Mouse_Pointer.png"), pointer;
     font-family: Laila;
-    font-size: clamp(12pt, 3vh, 24pt);
+    font-size: clamp(10pt, 2vh, 18pt);
     text-decoration: underline;
+    padding: 0.8em 1em;
+    min-height: min-content;
+    line-height: 1.4;
+    border-radius: 1em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
     box-sizing: border-box;
     width: 100%;
-    text-align: center;
 }
 
-.artlink:hover {
-    /* background-color: white;
-	color: black;
-    outline-offset: -2px;
-    outline-style: solid;
-    outline-width: 2px;
-    outline-color: black; */
-    text-decoration: none;
+.preview:active {
+    transform: scale(0.92);
 }
 
-#unicorn {
-    transform: scaleX(-1);
-    position: absolute;
-    top: 18%;
-    left: 3%;
-    height: 12%;
-    width: auto;
-    z-index: 1;
-    filter: drop-shadow(0rem 0rem 0.25rem rgb(50, 50, 50));
+@media (min-width: 768px) {
+    #slider {
+        width: 70vw;
+        left: 15vw;
+        bottom: 10vh;
+    }
+
+    #unicorn {
+        width: 10vw;
+        min-width: 80px;
+        max-width: 150px;
+    }
+
+    #instructions > div {
+        width: 70vw;
+        max-width: 600px;
+    }
 }
 
-#unicorn img {
-    height: 100%;
-    display: none;
+@media (min-width: 1024px) {
+    #slider {
+        width: 60vw;
+        left: 20vw;
+    }
+
+    #unicorn {
+        width: 8vw;
+        min-width: 100px;
+        max-width: 180px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    #Guide_Button,
+    .close-button img {
+        transition: none;
+    }
+}
+
+@media (max-height: 600px) {
+    #slider {
+        bottom: 5vh;
+        height: 36px;
+        min-height: 36px;
+    }
+
+    #slider::-webkit-slider-thumb,
+    #slider::-moz-range-thumb {
+        width: 50px;
+        height: 50px;
+    }
+
+    #instructions > div {
+        max-height: 80vh;
+        padding: 1rem;
+    }
 }
