@@ -398,12 +398,13 @@ class EunicornWorld {
         const cy = (this.top_coord + this.cachedUnicornHeight) / this.cachedBGHeight;
 
         return (
-            (cx < 0.09 && cy < 0.15 && cy > 0.03)
+            (cx > 0.03 && cx < 0.09 && cy < 0.15 && cy > 0.03)
             || (cx > 0.09 && cx < 0.22 && cy < 0.20 && cy > 0.03)
             || (cx > 0.22 && cx < 0.25 && cy < 0.15 && cy > 0.03)
             || (cx > 0.22 && cx < 0.30 && cy < 0.06 && cy >= 0.03)
             || (cx > 0.22 && cx < 0.26 && cy < 0.10 && cy >= 0.06)
             || (cx > 0.22 && cx < 0.26 && cy < 0.18 && cy >= 0.10)
+            || (cx > 0.28 && cx < 0.42 && cy < 0.25 && cy > 0.10)
             || (cx > 0.42 && cx < 0.47 && cy < 0.25 && cy > 0.15)
             || (cx > 0.44 && cx < 0.52 && cy < 0.33 && cy >= 0.25)
             || (cx > 0.44 && cx < 0.52 && cy < 0.40 && cy >= 0.33)
